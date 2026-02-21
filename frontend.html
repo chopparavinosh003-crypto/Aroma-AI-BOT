@@ -10,6 +10,7 @@
   <style>
     /* Modern CSS with Glassmorphism and animations */
     :root {
+      /* Light Theme (Default) */
       --primary: #059669;
       --primary-dark: #047857;
       --bg-gradient: linear-gradient(135deg, #ecfdf5, #f3f4f6, #d1fae5);
@@ -19,6 +20,24 @@
       --text-muted: #4b5563;
       --danger: #ef4444;
       --warning: #f59e0b;
+      --input-bg: white;
+      --btn-gray: #e5e7eb;
+      --btn-gray-hover: #d1d5db;
+    }
+
+    [data-theme="dark"] {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --bg-gradient: linear-gradient(135deg, #111827, #1f2937, #0f172a);
+      --card-bg: rgba(31, 41, 55, 0.85);
+      --card-border: rgba(55, 65, 81, 0.6);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --input-bg: #374151;
+      --btn-gray: #374151;
+      --btn-gray-hover: #4b5563;
     }
 
     * {
@@ -52,7 +71,9 @@
     }
 
     .login-box {
-      background: white;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
       padding: 45px;
       border-radius: 24px;
       text-align: center;
@@ -111,7 +132,7 @@
     }
 
     .navbar {
-      background: rgba(255, 255, 255, 0.9);
+      background: var(--card-bg);
       backdrop-filter: blur(12px);
       padding: 18px 45px;
       display: flex;
@@ -121,6 +142,7 @@
       top: 0;
       z-index: 100;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      border-bottom: 1px solid var(--card-border);
     }
 
     .navbar h1 {
@@ -139,8 +161,8 @@
     }
 
     .api-key-input {
-      background: white;
-      border: 1px solid #ccc;
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
       padding: 8px 15px;
       border-radius: 20px;
       outline: none;
@@ -169,12 +191,12 @@
     }
 
     .settings-btn {
-      background: #e5e7eb;
+      background: var(--btn-gray);
       color: var(--text-main);
     }
 
     .settings-btn:hover {
-      background: #d1d5db;
+      background: var(--btn-gray-hover);
     }
 
     .report-btn {
@@ -256,17 +278,42 @@
       font-size: 15px;
       font-weight: bold;
       margin-top: 15px;
-      background: #dbeafe;
-      color: #1e40af;
+      background: var(--btn-gray);
+      color: var(--text-main);
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
 
     /* Grid Layouts */
     .grid-top {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 25px;
       margin-bottom: 40px;
+    }
+
+    .grid-top>.card {
+      flex: 0 0 calc(20% - 20px);
+      min-width: 200px;
+      /* safety for inner content space */
+    }
+
+    @media (max-width: 1300px) {
+      .grid-top>.card {
+        flex: 0 0 calc(33.333% - 17px);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .grid-top>.card {
+        flex: 0 0 calc(50% - 12.5px);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .grid-top>.card {
+        flex: 0 0 100%;
+      }
     }
 
     .grid-mid {
@@ -289,6 +336,45 @@
       .grid-mid {
         grid-template-columns: 1fr;
       }
+    }
+
+    /* Slides Navigation */
+    .slide-nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .slide-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 20px;
+      background: var(--btn-gray);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+    }
+
+    .slide-btn:hover:not(.active) {
+      background: #d1d5db;
+      transform: translateY(-2px);
+    }
+
+    .slide {
+      animation: fadeInApp 0.5s ease;
     }
 
     /* Cards */
@@ -473,10 +559,11 @@
     .chat-input-area {
       display: flex;
       gap: 12px;
-      background: white;
+      background: var(--input-bg);
       padding: 10px;
       border-radius: 30px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--card-border);
     }
 
     .chat-input-area input {
@@ -488,6 +575,7 @@
       transition: 0.3s;
       font-size: 16px;
       background: transparent;
+      color: var(--text-main);
     }
 
     .send-btn {
@@ -525,8 +613,11 @@
       align-items: center;
     }
 
+    /* Modals Configuration */
     .settings-box {
-      background: white;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
       padding: 40px;
       border-radius: 24px;
       width: 90%;
@@ -574,10 +665,12 @@
       width: 100%;
       padding: 12px 15px;
       border-radius: 12px;
-      border: 2px solid #e5e7eb;
+      border: 2px solid var(--card-border);
       font-size: 16px;
       transition: 0.3s;
       outline: none;
+      background: var(--input-bg);
+      color: var(--text-main);
     }
 
     .form-group input:focus {
@@ -668,9 +761,9 @@
       <div class="form-group" style="text-align: center;">
         <label style="text-align: left;">Profile Picture</label>
         <div
-          style="margin: 15px auto; width: 140px; height: 140px; border-radius: 50%; border: 3px solid var(--primary); overflow: hidden; background: #e5e7eb; display: flex; align-items: center; justify-content: center;">
+          style="margin: 15px auto; width: 140px; height: 140px; border-radius: 50%; border: 3px solid var(--primary); overflow: hidden; background: var(--btn-gray); display: flex; align-items: center; justify-content: center;">
           <img id="prof-pic-preview" src="" style="width: 100%; height: 100%; object-fit: cover; display: none;" />
-          <i id="prof-pic-icon" class="fas fa-camera" style="font-size: 50px; color: #9ca3af;"></i>
+          <i id="prof-pic-icon" class="fas fa-camera" style="font-size: 50px; color: var(--text-muted);"></i>
         </div>
         <input type="file" id="prof-pic" accept="image/*"
           style="border: none; padding: 0; box-shadow: none; font-size: 14px;" onchange="previewImage(event)" />
@@ -697,6 +790,7 @@
       <div class="nav-actions">
         <input type="text" id="autoParentEmail" class="api-key-input" placeholder=" Enter ID for Auto Health Alerts..."
           style="display:none;" />
+        <button class="settings-btn" onclick="toggleTheme()" id="themeToggleBtn"><i class="fas fa-moon"></i></button>
         <button class="report-btn" id="sendReportBtn" onclick="sendReportToParent()"><i class="fas fa-paper-plane"></i>
           Send to Parent</button>
         <button class="settings-btn" onclick="toggleProfileModal()"><i class="fas fa-user"></i> Profile</button>
@@ -711,90 +805,111 @@
         <div class="user-badge" id="userBadge"><i class="fas fa-user-check"></i> Role: User</div>
       </div>
 
-      <!-- Stats Grid -->
-      <div class="grid-top">
-        <div class="card">
-          <div class="card-header"><span>Daily Steps</span><i class="fas fa-shoe-prints"></i></div>
-          <div class="card-value" id="val-steps">0</div>
-          <div class="card-limit">Goal: <span id="lim-steps">10000</span> steps</div>
-          <div class="progress-bg">
-            <div class="progress-fill" id="prog-steps"></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header"><span>Heart Rate</span><i class="fas fa-heartbeat"
-              style="color:#e11d48; background: rgba(225,29,72,0.1);"></i></div>
-          <div class="card-value" id="val-heart">0 <span style="font-size:18px; color:var(--text-muted);">bpm</span>
-          </div>
-          <div class="card-limit">Limit: <span id="lim-heart">120</span> bpm (Resting)</div>
-          <div class="progress-bg">
-            <div class="progress-fill" id="prog-heart" style="background:#e11d48;"></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header"><span>Calories Burned</span><i class="fas fa-fire"
-              style="color:#f97316; background: rgba(249,115,22,0.1);"></i></div>
-          <div class="card-value" id="val-calories">0 <span style="font-size:18px; color:var(--text-muted);">kcal</span>
-          </div>
-          <div class="card-limit">Goal: <span id="lim-calories">2000</span> kcal</div>
-          <div class="progress-bg">
-            <div class="progress-fill" id="prog-calories" style="background:#f97316;"></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header"><span>Sleep Duration</span><i class="fas fa-bed"
-              style="color:#8b5cf6; background: rgba(139,92,246,0.1);"></i></div>
-          <div class="card-value" id="val-sleep">0 <span style="font-size:18px; color:var(--text-muted);">h</span></div>
-          <div class="card-limit">Goal: <span id="lim-sleep">8</span> hours</div>
-          <div class="progress-bg">
-            <div class="progress-fill" id="prog-sleep" style="background:#8b5cf6;"></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header"><span>Body Temp</span><i class="fas fa-thermometer-half"
-              style="color:#ef4444; background: rgba(239,68,68,0.1);"></i></div>
-          <div class="card-value" id="val-temp">98.6 <span style="font-size:18px; color:var(--text-muted);">°F</span>
-          </div>
-          <div class="card-limit">Limit: <span id="lim-temp">99.5</span> °F (Normal)</div>
-          <div class="progress-bg">
-            <div class="progress-fill" id="prog-temp"></div>
-          </div>
-        </div>
+      <!-- Slide Navigation -->
+      <div class="slide-nav">
+        <button id="btn-slide1" class="slide-btn active" onclick="showSlide(1)"><i class="fas fa-heartbeat"></i>
+          Metrics</button>
+        <button id="btn-slide2" class="slide-btn" onclick="showSlide(2)"><i class="fas fa-chart-line"></i> Analysis &
+          Plans</button>
+        <button id="btn-slide3" class="slide-btn" onclick="showSlide(3)"><i class="fas fa-robot"></i> Chatbot</button>
       </div>
 
-      <!-- Middle Grid: Charts & AI Insights -->
-      <div class="grid-mid">
-        <div class="card">
-          <div class="card-header"><span>Weekly vs Daily Analysis</span><i class="fas fa-chart-bar"></i></div>
-          <div style="position: relative; height:300px; width:100%;">
-            <canvas id="analysisChart"></canvas>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header"><span>Recomandations:Health & Nutrition</span><i class="fas fa-brain"></i></div>
-          <div id="riskPanel" class="info-panel risk-low"><strong><i class="fas fa-heartbeat"></i> Health
-              Status</strong> Gathering data...</div>
-          <div id="nutritionPanel" class="info-panel nutrition-panel"><strong><i class="fas fa-utensils"></i> Nutrition
-              Plan</strong> Gathering data...</div>
-        </div>
-      </div>
-
-      <!-- Bottom Grid: Chatbot -->
-      <div class="grid-bot">
-        <div class="card chat-container">
-          <div class="card-header"><span>AroMi Health Chatbot</span><i class="fas fa-robot"></i></div>
-          <div class="chat-history" id="chatHistoryBox">
-            <div class="chat-msg msg-ai">Hi! I am AroMi AI, your Health Assistant..
-              <br><br>How can I help you today ?<br>
+      <!-- Slide 1: Metrics -->
+      <div class="slide" id="slide1">
+        <!-- Stats Grid -->
+        <div class="grid-top">
+          <div class="card">
+            <div class="card-header"><span>Daily Steps</span><i class="fas fa-shoe-prints"></i></div>
+            <div class="card-value" id="val-steps">0</div>
+            <div class="card-limit">Goal: <span id="lim-steps">10000</span> steps</div>
+            <div class="progress-bg">
+              <div class="progress-fill" id="prog-steps"></div>
             </div>
           </div>
-          <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="Ask about your health conditions or warnings..."
-              onkeypress="handleKey(event)" autocomplete="off" />
-            <button class="send-btn" onclick="sendChat()"><i class="fas fa-paper-plane"></i></button>
+          <div class="card">
+            <div class="card-header"><span>Heart Rate</span><i class="fas fa-heartbeat"
+                style="color:#e11d48; background: rgba(225,29,72,0.1);"></i></div>
+            <div class="card-value" id="val-heart">0 <span style="font-size:18px; color:var(--text-muted);">bpm</span>
+            </div>
+            <div class="card-limit">Limit: <span id="lim-heart">120</span> bpm (Resting)</div>
+            <div class="progress-bg">
+              <div class="progress-fill" id="prog-heart" style="background:#e11d48;"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span>Calories Burned</span><i class="fas fa-fire"
+                style="color:#f97316; background: rgba(249,115,22,0.1);"></i></div>
+            <div class="card-value" id="val-calories">0 <span
+                style="font-size:18px; color:var(--text-muted);">kcal</span>
+            </div>
+            <div class="card-limit">Goal: <span id="lim-calories">2000</span> kcal</div>
+            <div class="progress-bg">
+              <div class="progress-fill" id="prog-calories" style="background:#f97316;"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span>Sleep Duration</span><i class="fas fa-bed"
+                style="color:#8b5cf6; background: rgba(139,92,246,0.1);"></i></div>
+            <div class="card-value" id="val-sleep">0 <span style="font-size:18px; color:var(--text-muted);">h</span>
+            </div>
+            <div class="card-limit">Goal: <span id="lim-sleep">8</span> hours</div>
+            <div class="progress-bg">
+              <div class="progress-fill" id="prog-sleep" style="background:#8b5cf6;"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span>Body Temp</span><i class="fas fa-thermometer-half"
+                style="color:#ef4444; background: rgba(239,68,68,0.1);"></i></div>
+            <div class="card-value" id="val-temp">98.6 <span style="font-size:18px; color:var(--text-muted);">°F</span>
+            </div>
+            <div class="card-limit">Limit: <span id="lim-temp">99.5</span> °F (Normal)</div>
+            <div class="progress-bg">
+              <div class="progress-fill" id="prog-temp"></div>
+            </div>
           </div>
         </div>
-      </div>
+      </div> <!-- End Slide 1 -->
+
+      <!-- Slide 2: Analysis -->
+      <div class="slide" id="slide2" style="display:none;">
+        <!-- Middle Grid: Charts & AI Insights -->
+        <div class="grid-mid">
+          <div class="card">
+            <div class="card-header"><span>Weekly vs Daily Analysis</span><i class="fas fa-chart-bar"></i></div>
+            <div style="position: relative; height:300px; width:100%;">
+              <canvas id="analysisChart"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span>Recomandations:Health & Nutrition</span><i class="fas fa-brain"></i></div>
+            <div id="riskPanel" class="info-panel risk-low"><strong><i class="fas fa-heartbeat"></i> Health
+                Status</strong> Gathering data...</div>
+            <div id="nutritionPanel" class="info-panel nutrition-panel"><strong><i class="fas fa-utensils"></i>
+                Nutrition
+                Plan</strong> Gathering data...</div>
+          </div>
+        </div>
+      </div> <!-- End Slide 2 -->
+
+      <!-- Slide 3: Chatbot -->
+      <div class="slide" id="slide3" style="display:none;">
+        <!-- Bottom Grid: Chatbot -->
+        <div class="grid-bot">
+          <div class="card chat-container">
+            <div class="card-header"><span>AroMi Health Chatbot</span><i class="fas fa-robot"></i></div>
+            <div class="chat-history" id="chatHistoryBox">
+              <div class="chat-msg msg-ai">Hi! I am AroMi AI, your Health Assistant..
+                <br><br>How can I help you today ?<br>
+              </div>
+            </div>
+            <div class="chat-input-area">
+              <input type="text" id="chatInput" placeholder="Ask about your health conditions or warnings..."
+                onkeypress="handleKey(event)" autocomplete="off" />
+              <button class="send-btn" onclick="sendChat()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </div>
+      </div> <!-- End Slide 3 -->
 
     </div>
   </div>
@@ -846,11 +961,37 @@
             class="fab fa-google" style="font-size:14px; margin-left:5px;"></i></button>
       </div>
       <button class="save-btn" onclick="toggleReportModal()"
-        style="background:#f3f4f6; color:#374151; margin-top:12px; box-shadow:none;">Cancel</button>
+        style="background:var(--btn-gray); color:var(--text-main); margin-top:12px; box-shadow:none;">Cancel</button>
     </div>
   </div>
 
   <script>
+    // --- Theme Management ---
+    function toggleTheme() {
+      const isDark = document.body.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.body.removeAttribute('data-theme');
+        document.getElementById('themeToggleBtn').innerHTML = '<i class="fas fa-moon"></i>';
+      } else {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggleBtn').innerHTML = '<i class="fas fa-sun"></i>';
+      }
+
+      // Force repaint charts to adapt to color context if they exist
+      if (myChart) {
+        updateCharts();
+      }
+    }
+    function showSlide(slideNum) {
+      document.getElementById('slide1').style.display = slideNum === 1 ? 'block' : 'none';
+      document.getElementById('slide2').style.display = slideNum === 2 ? 'block' : 'none';
+      document.getElementById('slide3').style.display = slideNum === 3 ? 'block' : 'none';
+
+      document.getElementById('btn-slide1').classList.toggle('active', slideNum === 1);
+      document.getElementById('btn-slide2').classList.toggle('active', slideNum === 2);
+      document.getElementById('btn-slide3').classList.toggle('active', slideNum === 3);
+    }
+
     // --- State Management ---
     let pendingRole = null;
     let currentUserRole = 'adult';
